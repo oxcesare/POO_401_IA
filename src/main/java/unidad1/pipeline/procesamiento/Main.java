@@ -17,5 +17,24 @@ public class Main {
         for (FiltroImagen f : pipeline) {
             f.procesar();
         }
+
+        // Podemos cambiar el filtro sin modificar el motor de ejecución
+        System.out.println("*****************************************");
+
+        // Reemplazamos el filtro de reducción de ruido por otro sin cambiar el motor de ejecución
+
+
+        System.out.println("*****************************************");
+        FiltroImagen filtro = new ReductorDeRuido();
+        mostrar(filtro);
+
+        FiltroImagen otroFiltro = new EscalaDeGrises();
+        mostrar(otroFiltro);
+
+    }
+
+    public static void mostrar(FiltroImagen filtro) {
+        System.out.println("Mostrando el resultado del filtro:");
+        filtro.procesar();
     }
 }
