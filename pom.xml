@@ -11,6 +11,17 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
+
     </properties>
+
+    <!-- Agrega las dependencias necesarias aquí -->
+    <dependencies>
+        <dependency>
+            <groupId>mx.edu.unit1.neural</groupId>
+            <artifactId>neural-network-modeler</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
