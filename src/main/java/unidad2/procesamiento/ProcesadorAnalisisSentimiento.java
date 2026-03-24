@@ -5,15 +5,11 @@ import java.util.stream.Collectors;
 
 public class ProcesadorAnalisisSentimiento extends ProcesadorNLP {
 
-
     private static final List<String> STOP_WORDS =
             Arrays.asList("el", "la", "un");
 
-
     static {
         List<String> palabras =  Arrays.asList("bueno", "excelente", "maravilloso");
-
-
     }
 
     @Override
