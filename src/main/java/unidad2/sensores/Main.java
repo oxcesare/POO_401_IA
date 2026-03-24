@@ -8,7 +8,12 @@ public class Main {
     public static void main(String[] args) {
 
         List<SensorIA> percepcionHub = new ArrayList<>();
-        percepcionHub.add(new Percepcion());
+
+        Percepcion p = new Percepcion();
+        p.consumoEnergia=10.00;
+        p.modelo="A";
+
+        percepcionHub.add(p);
         percepcionHub.add(new SensorUltrasonido());
         percepcionHub.add(new SensorVision());
 
