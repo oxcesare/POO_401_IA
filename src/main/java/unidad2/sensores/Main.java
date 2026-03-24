@@ -9,13 +9,10 @@ public class Main {
 
         List<SensorIA> percepcionHub = new ArrayList<>();
 
-        Percepcion p = new Percepcion();
-        p.consumoEnergia=10.00;
-        p.modelo="A";
-
+        Percepcion p = new Percepcion("1.1", 10.00);
         percepcionHub.add(p);
-        percepcionHub.add(new SensorUltrasonido());
-        percepcionHub.add(new SensorVision());
+        percepcionHub.add(new SensorUltrasonido("1.0", 10.00));
+        percepcionHub.add(new SensorVision("2.2", 10.00));
 
         for (SensorIA sensor : percepcionHub) {
             sensor.leerDatos();
