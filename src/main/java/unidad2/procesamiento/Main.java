@@ -9,7 +9,7 @@ public class Main {
 
 
         List<ProcesadorNLP> lista = new ArrayList<ProcesadorNLP>();
-        String texto1 = "Hola, buenos días el día de hoy amenecí de mejor humor, excelente dia para todos";
+        String texto1 = "El modelo es excelente, el, la ,es un modelo muy bueno y genial";
 
         /**
             String texto2 = "Excelente trabajo, hoy amanecí maravilloso y de muy buen ánimo para estudiar Java.";

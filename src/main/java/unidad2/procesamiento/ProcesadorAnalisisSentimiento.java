@@ -9,11 +9,12 @@ public class ProcesadorAnalisisSentimiento extends ProcesadorNLP {
             Arrays.asList("el", "la", "un");
 
     static {
-        List<String> palabras =  Arrays.asList("bueno", "excelente", "maravilloso");
+        List<String> palabras = Arrays.asList("bueno", "excelente", "maravilloso");
     }
 
     @Override
     public List<String> tokenizar() {
+        // Debe dividir el texto por palabras.
         listaPalabras = new ArrayList<>(
                 Arrays.asList(getTextoCrudo().split("\\s+"))
         );
