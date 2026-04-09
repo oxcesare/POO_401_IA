@@ -1,4 +1,4 @@
-package unidad2.interfaces;
+package unidad2.interfaces.practica01;
 
 interface  Serializable{
     public void a();
