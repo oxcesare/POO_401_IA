@@ -1,4 +1,4 @@
-package certificacion.practica_02;
+package certificacion.practica02;
 
 public class TestClass {
 

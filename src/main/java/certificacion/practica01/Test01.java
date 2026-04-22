@@ -1,4 +1,4 @@
-package certificacion.practica_01;
+package certificacion.practica01;
 
 public class Test01 {
     public static void main(String[] args) {
