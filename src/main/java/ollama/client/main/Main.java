@@ -18,12 +18,15 @@ public class Main {
         // El Router hace su magia basada en el texto del usuario
         String rolDetectado = router.determinarRol(loQuePidioElUsuario);
         String instruccionesMejoradas = router.optimizarInstrucciones(loQuePidioElUsuario);
+        String tipoPrompt = router.determinarTipoPrompt(rolDetectado, instruccionesMejoradas);
 
         // Ahora construyes tu objeto PromptConfig con datos inteligentes, no fijos
         PromptConfig miPrompt = new PromptConfig(
                 rolDetectado,
                 instruccionesMejoradas,
-                "Explícamelo como experto en el área" // La pregunta específica
+                "Explícamelo como experto en el área",
+                tipoPrompt// La pregunta específica
+
         );
 
         Llama3Strategy miLlama = new Llama3Strategy();
@@ -45,7 +48,7 @@ public class Main {
         PromptConfig miPrompt = new PromptConfig(
                 "Arquitecto de Software Senior",
                 "Explica el patrón Strategy de forma sencilla",
-                "¿Qué es y para qué sirve?"
+                "¿Qué es y para qué sirve?","few-shot"
         );
 
         // 2. Configuramos la instrucción específica (Aquí se manda a llamar)

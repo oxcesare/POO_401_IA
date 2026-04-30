@@ -50,4 +50,24 @@ public class PromptBuilder {
         sb.append("<user>\n").append(entradaUsuario).append("\n</user>");
         return sb.toString();
     }
+
+    // Método para zero-shot (sin ejemplos)
+    public static PromptBuilder zeroShot(String rol, String instrucciones, String entradaUsuario) {
+        return new PromptBuilder()
+                .conRol(rol)
+                .conInstrucciones(instrucciones)
+                .conEntrada(entradaUsuario);
+    }
+
+    // Método para few-shot (con ejemplos)
+    public static PromptBuilder fewShot(String rol, String instrucciones, List<String[]> ejemplos, String entradaUsuario) {
+        PromptBuilder builder = new PromptBuilder()
+                .conRol(rol)
+                .conInstrucciones(instrucciones);
+        for (String[] ejemplo : ejemplos) {
+            builder.agregarEjemplo(ejemplo[0], ejemplo[1]);
+        }
+        builder.conEntrada(entradaUsuario);
+        return builder;
+    }
 }

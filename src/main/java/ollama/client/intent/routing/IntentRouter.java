@@ -38,4 +38,18 @@ public class IntentRouter {
 
         return instrucciones;
     }
+
+    // Crear el metodo que determine el tipo de Prompt de acuerdo Al rol y al optimzadorInstrucciones
+    public String determinarTipoPrompt(String rol, String instruccionesOptimizadas) {
+        // Ejemplo simple: si el rol es muy especializado o las instrucciones piden ejemplos, usar few-shot
+        String instruccionesLower = instruccionesOptimizadas.toLowerCase();
+        String rolLower = rol.toLowerCase();
+
+        if (instruccionesLower.contains("ejemplo") || instruccionesLower.contains("muestra cómo") ||
+                rolLower.contains("profesor") || rolLower.contains("experto")) {
+            return "few-shot";
+        }
+        // Si no se requieren ejemplos, usar zero-shot
+        return "zero-shot";
+    }
 }
