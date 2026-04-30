@@ -1,4 +1,4 @@
-package ollama.client.template;
+package ollama.client.prompting.engine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.List;
  * siguiendo las mejores prácticas de Delimitadores y Estructura.
  */
 public class PromptBuilder {
+
     private String rol;
     private String instrucciones;
     private List<String> ejemplos = new ArrayList<>();

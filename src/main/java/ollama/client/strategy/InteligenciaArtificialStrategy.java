@@ -1,6 +1,6 @@
 package ollama.client.strategy;
 
-import ollama.client.template.PromptConfig;
+import ollama.client.prompting.engine.PromptConfig;
 
 public interface InteligenciaArtificialStrategy {
 

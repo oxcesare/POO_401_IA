@@ -18,6 +18,8 @@ public class OllamaClient {
                 modelo, promptEstructurado.replace("\"", "\\\"").replace("\n", "\\n")
         );
 
+
+
         try {
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(10))

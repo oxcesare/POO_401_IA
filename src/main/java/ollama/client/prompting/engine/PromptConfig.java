@@ -1,4 +1,4 @@
-package ollama.client.template;
+package ollama.client.prompting.engine;
 
 public class PromptConfig {
 

@@ -2,7 +2,7 @@ package ollama.client.context;
 
 
 import ollama.client.strategy.InteligenciaArtificialStrategy;
-import ollama.client.template.PromptConfig;
+import ollama.client.prompting.engine.PromptConfig;
 
 public class AgenteConversacional {
 

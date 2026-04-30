@@ -2,20 +2,12 @@ package ollama.client.context;
 
 import ollama.client.OllamaClient;
 import ollama.client.strategy.InteligenciaArtificialStrategy;
-import ollama.client.template.PromptBuilder;
-import ollama.client.template.PromptConfig;
+import ollama.client.prompting.engine.PromptBuilder;
+import ollama.client.prompting.engine.PromptConfig;
 
 public class Llama3Strategy implements InteligenciaArtificialStrategy {
 
     private final OllamaClient cliente = new OllamaClient();
-
-    private String instrucciones = "Responde de forma concisa y técnica.";
-
-    // Método para cambiar el comportamiento en tiempo de ejecución
-    public void setInstrucciones(String nuevasInstrucciones) {
-        this.instrucciones = nuevasInstrucciones;
-    }
-
 
     @Override
     public String generarRespuesta(PromptConfig config) {

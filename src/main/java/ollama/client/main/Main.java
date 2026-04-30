@@ -2,11 +2,38 @@ package ollama.client.main;
 
 import ollama.client.context.AgenteConversacional;
 import ollama.client.context.Llama3Strategy;
-import ollama.client.template.PromptConfig;
+import ollama.client.intent.routing.IntentRouter;
+import ollama.client.prompting.engine.PromptConfig;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        AgenteConversacional miAgente = new AgenteConversacional();
+        IntentRouter router = new IntentRouter();
+
+        // Lo que el usuario realmente quiere
+        String loQuePidioElUsuario = "Explica el patrón Strategy de forma sencilla";
+
+        // El Router hace su magia basada en el texto del usuario
+        String rolDetectado = router.determinarRol(loQuePidioElUsuario);
+        String instruccionesMejoradas = router.optimizarInstrucciones(loQuePidioElUsuario);
+
+        // Ahora construyes tu objeto PromptConfig con datos inteligentes, no fijos
+        PromptConfig miPrompt = new PromptConfig(
+                rolDetectado,
+                instruccionesMejoradas,
+                "Explícamelo como experto en el área" // La pregunta específica
+        );
+
+        Llama3Strategy miLlama = new Llama3Strategy();
+        miAgente.setModelo(miLlama);
+
+        miAgente.interactuar(miPrompt);
+
+    }
+
+    public void version1AgenteConversacional() {
 
         AgenteConversacional miAgente = new AgenteConversacional();
 
@@ -27,7 +54,6 @@ public class Main {
         miAgente.interactuar(miPrompt);
 
         System.out.println("--- Fin de la interacción ---");
-
     }
 
 }
