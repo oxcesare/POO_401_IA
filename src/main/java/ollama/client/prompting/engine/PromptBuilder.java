@@ -70,4 +70,32 @@ public class PromptBuilder {
         builder.conEntrada(entradaUsuario);
         return builder;
     }
+
+    // Método para Chain-of-Thought (Pensamiento paso a paso)
+    public static PromptBuilder chainOfThought(String rol, String instrucciones, String entradaUsuario) {
+        String instruccionCoT = instrucciones + "\nAnaliza el problema paso a paso antes de dar la respuesta final.";
+        return new PromptBuilder()
+                .conRol(rol)
+                .conInstrucciones(instruccionCoT)
+                .conEntrada(entradaUsuario);
+    }
+
+    // Método para Meta-Prompting (Generador de Prompts)
+    public static PromptBuilder metaPrompting(String instruccionesParaCrearPrompt) {
+        return new PromptBuilder()
+                .conRol("Experto en Ingeniería de Prompts")
+                .conInstrucciones("Tu tarea es diseñar un prompt profesional y optimizado basado en los requisitos del usuario.")
+                .conEntrada(instruccionesParaCrearPrompt);
+    }
+
+    // Método para Role-based Prompting (Persona)
+    public static PromptBuilder roleBased(String rolEspecializado, String instrucciones, String entradaUsuario) {
+        // Aquí el 'rol' deja de ser un campo opcional y se convierte en el núcleo del comportamiento
+        return new PromptBuilder()
+                .conRol(rolEspecializado)
+                .conInstrucciones("Como " + rolEspecializado + ", tu tarea es: " + instrucciones)
+                .conEntrada(entradaUsuario);
+    }
+
+
 }

@@ -40,16 +40,51 @@ public class IntentRouter {
     }
 
     // Crear el metodo que determine el tipo de Prompt de acuerdo Al rol y al optimzadorInstrucciones
-    public String determinarTipoPrompt(String rol, String instruccionesOptimizadas) {
-        // Ejemplo simple: si el rol es muy especializado o las instrucciones piden ejemplos, usar few-shot
-        String instruccionesLower = instruccionesOptimizadas.toLowerCase();
-        String rolLower = rol.toLowerCase();
 
-        if (instruccionesLower.contains("ejemplo") || instruccionesLower.contains("muestra cómo") ||
-                rolLower.contains("profesor") || rolLower.contains("experto")) {
+    /**
+     * Este metodo tiene que definir que tipo de prompt es el que se selecciona a partir
+     * de un rol y  una instruccion
+     * @param rol
+     * @param instruccionesOptimizadas
+     * @return
+     */
+    public String determinarTipoPrompt(String rol, String instruccionesOptimizadas) {
+
+        String instruccionesLower = instruccionesOptimizadas.toLowerCase();
+
+
+        if (instruccionesLower.contains("ejemplo") ||
+                instruccionesLower.contains("muestra cómo") ||
+                instruccionesLower.contains("casos de uso") ||
+                instruccionesLower.contains("siguiendo este formato")) {
             return "few-shot";
         }
-        // Si no se requieren ejemplos, usar zero-shot
+
+        if (instruccionesLower.contains("paso a paso") ||
+                instruccionesLower.contains("razona") ||
+                instruccionesLower.contains("pensemos") ||
+                instruccionesLower.contains("desglosa")) {
+            return "chain-of-thought";
+        }
+
+        // 1. Detección de Meta-Prompting
+        if (instruccionesLower.contains("genera un prompt") ||
+                instruccionesLower.contains("diseña una instrucción") ||
+                instruccionesLower.contains("optimiza este prompt")) {
+            return "meta-prompting";
+        }
+
+        // Detección de Role-based Prompting
+        // Se activa si el rol no es genérico o si las instrucciones piden explícitamente adoptar una identidad.
+        String rolNormalizado = rol == null ? "" : rol.trim().toLowerCase();
+        if ((!rolNormalizado.isEmpty() && !rolNormalizado.equals("asistente virtual general"))
+                || instruccionesLower.contains("actúa como")
+                || instruccionesLower.contains("asume el rol de")) {
+            return "role-based";
+        }
+
+
+
         return "zero-shot";
     }
 }
