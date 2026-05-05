@@ -5,6 +5,8 @@ import ollama.client.strategy.InteligenciaArtificialStrategy;
 import ollama.client.prompting.engine.PromptBuilder;
 import ollama.client.prompting.engine.PromptConfig;
 
+import java.util.function.ToDoubleBiFunction;
+
 public class Llama3Strategy implements InteligenciaArtificialStrategy {
 
     private final OllamaClient cliente = new OllamaClient();
@@ -13,7 +15,7 @@ public class Llama3Strategy implements InteligenciaArtificialStrategy {
     public String generarRespuesta(PromptConfig config) {
 
         //Determinar el Prompt seleccionado
-        String promptSeleccionado="";
+        String promptSeleccionado = "";
 
         //Swtich para determinar el tipo de prompt de acuerdo al valor del objeto config
         switch (config.getTipoPrompt()) {
@@ -25,12 +27,41 @@ public class Llama3Strategy implements InteligenciaArtificialStrategy {
                         .build();
                 break;
             case "few-shot":
-                // Aquí podrías agregar ejemplos al prompt para few-shot
+                PromptBuilder builder = new PromptBuilder()
+                        .conRol(config.getRol())
+                        .conInstrucciones(config.getInstrucciones());
+                if (config.getEjemplos() != null) {
+                    for (String[] ejemplo : config.getEjemplos()) {
+                        builder.agregarEjemplo(ejemplo[0], ejemplo[1]);
+                    }
+                }
+                builder.conEntrada(config.getEntrada());
+                promptSeleccionado = builder.build();
+                break;
+
+            case "chain-of-thought":
+                /*
+                * Para este tipo de prompt, podríamos agregar
+                  instrucciones específicas para que el modelo piense paso a paso
+                */
+                promptSeleccionado = new PromptBuilder()
+                        .conRol(config.getRol())
+                        .conInstrucciones(config.getInstrucciones() + "\\nAnaliza el problema paso a paso antes de dar la respuesta final.")
+                        .conEntrada(config.getEntrada())
+                        .build();
+                break;
+            case "meta-prompting":
+                promptSeleccionado = new PromptBuilder()
+                        .conRol("Experto en Ingeniería de Prompts")
+                        .conInstrucciones("Tu tarea es diseñar un prompt profesional y optimizado basado en los requisitos del usuario.")
+                        .conEntrada(config.getInstrucciones()) // Aquí usamos las instrucciones como base para crear el nuevo prompt
+                        .build();
+                break;
+
+            case "role-based":
                 promptSeleccionado = new PromptBuilder()
                         .conRol(config.getRol())
                         .conInstrucciones(config.getInstrucciones())
-                        .agregarEjemplo("¿Qué es el patrón Strategy?", "El patrón Strategy es un patrón de diseño que permite definir una familia de algoritmos, encapsular cada uno de ellos y hacerlos intercambiables. Permite que el algoritmo varíe independientemente de los clientes que lo utilizan.")
-                        .agregarEjemplo("¿Para qué sirve el patrón Strategy?", "El patrón Strategy se utiliza para evitar la proliferación de condicionales en el código, permitiendo que diferentes algoritmos puedan ser seleccionados en tiempo de ejecución sin modificar el código cliente.")
                         .conEntrada(config.getEntrada())
                         .build();
                 break;
@@ -44,11 +75,11 @@ public class Llama3Strategy implements InteligenciaArtificialStrategy {
         }
 
 
-
         // 2. Enviamos la petición real al modelo Llama3 instalado
         String jsonRespuesta = cliente.enviarPeticion("llama3", promptSeleccionado);
 
-        // Tip para los alumnos: Aquí deberían usar Jackson/Gson para extraer solo el campo "response"
+        // TODO implementar la logica necesaria para encapsular el response mediante
+        // Jackson (Json)
         return "Respuesta de Ollama: " + jsonRespuesta;
     }
 
