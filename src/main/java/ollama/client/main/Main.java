@@ -12,50 +12,53 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
         AgenteConversacional miAgente = new AgenteConversacional();
         IntentRouter router = new IntentRouter();
 
-        //Implementacion para solicitar la información al usuario
         Scanner sc = new Scanner(System.in);
 
-        // Lo que el usuario realmente quiere
-        String loQuePidioElUsuario = sc.nextLine();
+        try {
+            // Lo que el usuario realmente quiere
+            String loQuePidioElUsuario = sc.nextLine();
 
-        // El Router hace su magia basada en el texto del usuario
-        String rolDetectado = router.determinarRol(loQuePidioElUsuario);
-        String instruccionesMejoradas = router.optimizarInstrucciones(loQuePidioElUsuario);
-        String tipoPrompt = router.determinarTipoPrompt(rolDetectado, instruccionesMejoradas);
-        List<String> listaEjemplos = new ArrayList<>();
+            // El Router hace su magia basada en el texto del usuario
+            String rolDetectado = router.determinarRol(loQuePidioElUsuario);
+            String instruccionesMejoradas = router.optimizarInstrucciones(loQuePidioElUsuario);
+            String tipoPrompt = router.determinarTipoPrompt(rolDetectado, instruccionesMejoradas);
+            List<String> listaEjemplos = new ArrayList<>();
 
-        if (tipoPrompt.equals("few-shot")) {
-            // el usuario puede agregar los ejemplos que necesite
-            String agregarEjemplo = "¿Quieres agregar un ejemplo? (sí/no)";
-            System.out.println(agregarEjemplo);
-            while (!agregarEjemplo.equals("s")) {
-                String ejemplo = sc.nextLine();
-                listaEjemplos.add(ejemplo);
+            if (tipoPrompt.equals("few-shot")) {
+                String agregarEjemplo;
+                do {
+                    System.out.println("¿Quieres agregar un ejemplo? (sí/no)");
+                    agregarEjemplo = sc.nextLine().trim().toLowerCase();
+                    if (agregarEjemplo.equals("si")) {
+                        System.out.println("Escribe el ejemplo:");
+                        String ejemplo = sc.nextLine();
+                        listaEjemplos.add(ejemplo);
+                    }
+                } while (agregarEjemplo.equals("sí") || agregarEjemplo.equals("si"));
             }
+
+            PromptConfig miPrompt = new PromptConfig(
+                    rolDetectado,
+                    instruccionesMejoradas,
+                    "Explícamelo como experto en el área",
+                    tipoPrompt,
+                    listaEjemplos
+            );
+
+            Llama3Strategy miLlama = new Llama3Strategy();
+            miAgente.setModelo(miLlama);
+
+            miAgente.interactuar(miPrompt);
+
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error al procesar la entrada: " + e.getMessage());
+        } finally {
+            sc.close();
         }
-
-        // Ahora construyes tu objeto PromptConfig con datos inteligentes, no fijos
-        PromptConfig miPrompt = new PromptConfig(
-                rolDetectado,
-                instruccionesMejoradas,
-                "Explícamelo como experto en el área",
-                tipoPrompt, // La pregunta específica
-                listaEjemplos
-
-        );
-
-
-        Llama3Strategy miLlama = new Llama3Strategy();
-        miAgente.setModelo(miLlama);
-
-        miAgente.interactuar(miPrompt);
-
     }
-
     public void version2AgenteConversacional() {
         AgenteConversacional miAgente = new AgenteConversacional();
         IntentRouter router = new IntentRouter();

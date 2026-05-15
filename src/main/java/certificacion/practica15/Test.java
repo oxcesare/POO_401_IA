@@ -10,5 +10,9 @@ public class Test {
         int [] d[] = new int[5][4];
         int [] e[] = new int[5][];
         int [] []f = new int[5][4];
+
+        Class Test = Test.class;
+        String clase = Test.getName();
+        System.out.println(clase);
     }
 }
