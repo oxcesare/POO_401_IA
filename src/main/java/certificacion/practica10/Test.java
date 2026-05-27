@@ -8,13 +8,13 @@ public class Test {
 }
 
 
-abstract class Automobile{
-    abstract  void honk();
+abstract class Automobile {
+    abstract void honk();
 }
 
 
-abstract class Automobile2{
-    void honk(){
+abstract class Automobile2 {
+    void honk() {
         System.out.println("Honk");
     }
 }
