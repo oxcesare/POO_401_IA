@@ -2,6 +2,9 @@ package certificacion.fase3.practica03;
 
 public class TestClass {
 
+    //Si es variable final aunque sea de clase la tengo que inicializar
+    final boolean x=true;
+
     public static Integer wiggler (Integer x){
         Integer y = x+10;
         x++;
